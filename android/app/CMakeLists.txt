@@ -11,7 +11,10 @@ cmake_minimum_required(VERSION 3.22.1)
 # Since this is the top level CMakeLists.txt, the project name is also accessible
 # with ${CMAKE_PROJECT_NAME} (both CMake variables are in-sync within the top level
 # build script scope).
-project("secrets")
+project(appmodules)
+
+# This file includes all the necessary to let you build your application with the New Architecture.
+include(${REACT_ANDROID_DIR}/cmake-utils/ReactNative-application.cmake)
 
 
 # Creates and names a library, sets it as either STATIC
@@ -35,10 +38,10 @@ project("secrets")
 # automatically packages shared libraries with your APK.
 
 add_library( # Specifies the name of the library.
-             ${CMAKE_PROJECT_NAME}
+             secrets
 
              # Sets the library as a shared library.
-             SHARED
+             STATIC
 
              # Provides a relative path to your source file(s).
              # List C/C++ source files with relative paths to this CMakeLists.txt.
@@ -47,7 +50,11 @@ add_library( # Specifies the name of the library.
 # Specifies libraries CMake should link to your target library. You
 # can link libraries from various origins, such as libraries defined in this
 # build script, prebuilt third-party libraries, or Android system libraries.
-target_link_libraries(${CMAKE_PROJECT_NAME}
+target_link_libraries(secrets
     # List libraries link to the target library
     android
     log)
+
+target_link_libraries(secrets android log)
+target_link_libraries(${CMAKE_PROJECT_NAME}
+    secrets)
